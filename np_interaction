@@ -1,0 +1,19 @@
+def np_interaction(x):
+    ## Using x - np array as an input, produce y - np array as an output
+    ## y will contain all possible interactions of columns in x, including original ones
+    ## Warning; number of columns exponentialy increases: ncol =  2**n - 1
+    itr = x.shape[1]
+    lbl = []
+    for i in range(itr):
+        if i == 0:
+            xiter = x[:,i].reshape(x.shape[i],1)    ## keep 2 dimensions when slicing 1 column
+            lbl = ['_'+str(i)]
+        else:
+            c = 1 if len(xiter.shape)==1 else xiter.shape[1]   ## N columns in xiter
+            for j in range(c):
+                lint = lbl[j]+'_'+str(i)
+                lbl.append(lint)
+                xiter = np.c_[xiter, xiter[:,j] * x[:,i]]
+            lbl.append('_'+str(i))
+            xiter = np.c_[xiter, x[:,i]]
+    return lbl, xiter
