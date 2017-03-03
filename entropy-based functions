@@ -1,0 +1,29 @@
+import math
+import pandas as pd
+
+def ent_sx(x):
+    # Input: pandas series with categorical values
+    # Output: Entropy of the series
+    p = x.groupby(lambda a: x[a]).count() / len(x)
+    ep =  -p.apply(lambda a: a*math.log2(max(10**-15, a))).sum()
+    return ep
+
+def condent_xy(xy):
+    # Input: pandas df with 2 categorical values of x and y
+    # Output: conditional entropy of X|Y:
+    ly = xy.ix[:,1].unique()                                                        ## Categories of y
+    prob_ly = [max(10^-15, xy[xy.ix[:,1]==y].shape[0] / xy.shape[0]) for y in ly]   ## Probability of y, from column 1
+    sx = 0
+    for ix,y in enumerate(ly):
+        sx += ent_sx(xy.ix[xy.ix[:,1]==y,0]) * prob_ly[ix] 
+    return sx
+
+def sim_uncertainty_xy(xy):
+    # Input: pandas dataframe with 2 columns of categorical values
+    # Output: symmetric uncertainty measure
+    ex = ent_sx(xy.ix[:,0])                                            ## Entropy of x, from column 0
+    ey = ent_sx(xy.ix[:,1])                                            ## Entropy of y, from column 1
+    exy = condent_xy(xy)                                               ## Conditional entropy x given y
+    ig = ex - exy                                                      ## information gain
+    su = 2*(ig / (ex + ey))                                            # Symmetric uncertainty
+    return su
