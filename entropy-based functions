@@ -1,6 +1,13 @@
 import math
 import pandas as pd
 
+## Source: http://www.aaai.org/Papers/ICML/2003/ICML03-111.pdf
+## Feature Selection for High-Dimensional Data: A Fast Correlation-Based Filter Solution
+## Lei Yu leiyu@asu.edu
+## Huan Liu hliu@asu.edu
+## Department of Computer Science & Engineering, Arizona State University, Tempe, AZ 85287-5406, USA
+
+
 def ent_sx(x):
     # Input: pandas series with categorical values
     # Output: Entropy of the series
