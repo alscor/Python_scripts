@@ -8,7 +8,10 @@ import cv2                      # OpenCV2 module - must be installed before runn
 # in python session:
 # import cv2; print(cv2.__version__)
 
-
+####################################################################
+# Do not proceed until cv2 is properly working
+# Сначала надо установить библиотеки CV2. 
+####################################################################
 
 ### Working with video
 cap = cv2.VideoCapture(0)                           # Camera capture object
